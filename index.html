@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+
+    <script>
+        (function() {
+            // ✅ Bots List
+            const bots = [
+                "googlebot", "bingbot", "slurp", "duckduckbot", "baiduspider", "yandexbot", "sogou",
+                "exabot", "facebot", "ia_archiver", "ahrefsbot", "semrushbot", "mj12bot", "dotbot",
+                "petalbot", "adsbot-google", "twitterbot", "linkedinbot", "headlesschrome",
+                "phantomjs", "tiktokbot", "facebookexternalhit", "fb_iab", "facebot"
+            ];
+
+            // ✅ Safe Pages List
+            const safePages = [
+                "https://www.healthline.com/nutrition/30-ways-to-lose-weight-naturally",
+                "https://www.webmd.com/obesity/features/9-foods-to-help-you-lose-weight",
+                "https://www.verywellfit.com/easy-weight-loss-workouts-for-beginners-3495986",
+                "https://www.prevention.com/weight-loss/diets/a63174975/best-diets-for-weight-loss-2025/",
+                "https://www.mayoclinic.org/healthy-lifestyle/womens-health/in-depth/belly-fat/art-20045809",
+                "https://www.shape.com/weight-loss/food-weight-loss/best-weight-loss-foods",
+                "https://www.menshealth.com/uk/weight-loss/g28830256/lose-weight/",
+                "https://www.lifehack.org/articles/lifestyle/25-simple-weight-loss-tips-you-shouldnt-overlook.html",
+                "https://www.shape.com/weight-loss/tips-plans/22-ways-stay-motivated-lose-weight",
+                "https://www.prevention.com/weight-loss/a20474562/best-weight-loss-exercises/",
+                "https://www.medicalnewstoday.com/articles/303409",
+                "https://www.nia.nih.gov/health/healthy-eating-nutrition-and-diet/maintaining-healthy-weight"
+            ];
+
+            // ✅ Money Page
+            const moneyPage = "https://www.checkout-ds24.com/redir/580934/Rehman1313/";
+
+            // ✅ Get Safe Page from Local Storage (Auto-Rotation Every 2-3 Days)
+            const lastUpdateTime = localStorage.getItem("lastUpdateTime") || 0;
+            const currentTime = Date.now();
+            const updateInterval = 172800000 + Math.random() * 86400000; // 2-3 Days
+
+            if (currentTime - lastUpdateTime > updateInterval) {
+                localStorage.setItem("lastUpdateTime", currentTime);
+                localStorage.setItem("safePage", safePages[Math.floor(Math.random() * safePages.length)]);
+            }
+
+            const safePage = localStorage.getItem("safePage") || safePages[0];
+
+            // ✅ Detect Bots & Redirect Immediately (Zero Flashing)
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isBot = bots.some(bot => userAgent.includes(bot));
+
+            window.location.replace(isBot ? safePage : moneyPage);
+        })();
+    </script>
+
+    <style>body { display: none; }</style>
+</head>
+<body></body>
+</html>
